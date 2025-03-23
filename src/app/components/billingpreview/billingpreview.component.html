@@ -1,0 +1,137 @@
+<div class="invoice-container">
+  <div class="invoice-content">
+
+    <div class="invoice-container">
+      <div class="invoice-content">
+        <div class="empty-rows">
+          <div *ngFor="let i of [1,2,3,4,5]">&nbsp;</div>
+        </div>
+    
+    <div class="invoice-header text-center">
+      <h2>TAX INVOICE</h2>
+      <div class="d-flex justify-content-between">
+        <div class="customer-info">
+          <p><strong>{{ billData.customerDetails.name }}</strong></p>
+          <p>Mobile No: {{ billData.customerDetails.phone }}</p>
+          <p>Aadhar No: {{ billData.customerDetails.aadhar }}</p>
+          <p>State Code: Andhra Pradesh-37</p>
+        </div>
+        <div class="invoice-info text-end">
+          <p><strong>Inv. No:</strong> {{ invoiceNo || '01304/V/23-24/GS' }}</p>
+          <p><strong>Date:</strong> {{ currentDate | date:'dd-MMM-yy' }}</p>
+          <p><strong>Type:</strong> {{ billData.productDetails.category }}</p>
+        </div>
+      </div>
+      <div>
+        <p>PAN No / GST No: {{ billData.customerDetails.pan }}</p>
+      </div>
+    </div>
+
+    <div class="invoice-body">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Item Name / Description</th>
+            <th>HSN Code</th>
+            <th>Gr.Weight Grams</th>
+            <th>Net.Weight Grams</th>
+            <th>Rate Per.Gm</th>
+            <th>Val.Add. Rs. Ps.</th>
+            <th>Stones Rs. Ps.</th>
+            <th>Discount Rs. Ps.</th>
+            <th>Amount Rs. Ps.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ billData.productDetails.itemName }}</td>
+            <td>{{ billData.productDetails.hsnCode }}</td>
+            <td>{{ billData.productDetails.grweight }}</td>
+            <td>{{ billData.productDetails.weight }}</td>
+            <td>{{ billData.productDetails.rate }}</td>
+            <td>{{ billData.financials.vaCharge }}</td>
+            <td>{{ billData.financials.stoneCharge }}</td>
+            <td>{{ billData.financials.discount }}</td>
+            <td>{{ billData.financials.baseAmount }}</td>
+          </tr>
+          <tr class="empty-row" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12]">
+            <td colspan="9">&nbsp;</td>
+          </tr>
+          <tr class="total-row">
+            <td colspan="2"></td>
+            <td>{{ billData.productDetails.weight }}</td>
+            <td>{{ billData.productDetails.weight }}</td>
+            <td colspan="4"></td>
+            <td>{{ billData.financials.baseAmount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="invoice-footer">
+      <div class="row">
+        <div class="col-md-6">
+          <p><strong>Our Bank Details:</strong></p>
+          <p>Bank & Branch: State Bank of India, Main Branch, Chira</p>
+          <p>A/c. No: 37782144574    IFSC: SBIN0001009</p>
+        </div>
+        <div class="col-md-6">
+          <table class="table table-sm table-borderless">
+            <tbody>
+              <tr>
+                <td>SGST @1.5%:</td>
+                <td class="text-end">{{ (billData.financials.baseAmount * 0.015).toFixed(2) }}</td>
+              </tr>
+              <tr>
+                <td>CGST @1.5%:</td>
+                <td class="text-end">{{ (billData.financials.baseAmount * 0.015).toFixed(2) }}</td>
+              </tr>
+              <tr>
+                <td>IGST @3.0%:</td>
+                <td class="text-end"></td>
+              </tr>
+              <tr>
+                <td><strong>Total Bill Amount:</strong></td>
+                <td class="text-end"><strong>{{ totalWithTax.toFixed(2) }}</strong></td>
+              </tr>
+              <tr>
+                <td>Advance:</td>
+                <td class="text-end">{{ billData.financials.advanceUsed }}</td>
+              </tr>
+              <tr>
+                <td>Scheme Amount:</td>
+                <td class="text-end">{{ billData.financials.schemeUsed }}</td>
+              </tr>
+              <tr>
+                <td>Discount/Rounding Off:</td>
+                <td class="text-end">{{ billData.financials.discount }}</td>
+              </tr>
+              <tr>
+                <td><strong>Balance Amount:</strong></td>
+                <td class="text-end"><strong>{{ balanceAmount.toFixed(2) }}</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="disclaimer-text mt-2">
+        <p>Amount Includes GST, VA & Stone Value (if Stone Items)</p>
+      </div>
+      <div class="footer-notes mt-3">
+        <p class="mb-1">E&O.E.</p>
+        <p class="mb-1">Goods Sold and delivered at our shop only.</p>
+        <p class="mb-1">All subject to CHIRALA jurisdiction only.</p>
+        <p class="gst-signature">
+          <span>GST NO: 37AELPP7040L1ZZ</span>
+          <span>Signature of the Customer</span>
+          <span>Authorised Signature</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="preview-footer mt-3">
+      <button class="btn btn-success" (click)="printBill()">Confirm & Print</button>
+      <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,150 @@
+<div class="container-fluid">
+    <h2 class="text-center">Customers</h2>
+    <button type="submit" data-bs-toggle="modal" data-bs-target="#customerAddViewModal" class="btn btn-primary ncview-Btns">Add Customer</button>
+    <br> <br>
+    <div class="container-fluid">
+      <input class="form-control" type="text" placeholder="Search " [(ngModel)]="searchTerm" (input)="filterCustomers()">
+<br>
+      <table class="table table-light" id="customer-table">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">CustomerId</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Aadhar No.</th>
+            <th scope="col">Pan Card No.</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Alternate Phone No.</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody id="sales-tbody">
+            <tr  *ngFor="let item of filteredCustomers  | paginate: { itemsPerPage: 10, currentPage: currentPage }">
+                <td>{{item.CustomerID}}</td>
+                <td>{{item.CustomerName}}</td>
+                <td>{{item.Aadhar}}</td>
+                <td>{{item.Pan_Card}}</td>
+                <td>{{item.Email}}</td>
+                <td>{{item.Address}}</td>
+                <td>{{item.Phone}}</td>
+                <td>{{item.AlternatePhone}}</td>
+                <td><button type="submit" attr.data-customerid="{{item.CustomerId}}" data-bs-toggle="modal" data-bs-target="#customerViewModal" class="btn btn-primary cview-Btns" (click)="viewSalesById(item.CustomerID)">View</button></td>
+            </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+
+    </div>
+</div>
+  
+  <!-- View Modal -->
+  <div class="modal fade" id="customerViewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">Customer Details</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row row-cols-1 row-cols-md-4 text-center">
+            <div class="mb-3 col">
+                <label for="cname" class="form-label">Customer Name</label>
+                <input type="text" class="form-control text-center"  name="customer-name" [(ngModel)]="customername" ngModel>
+            </div>
+            <div class="mb-3 col">
+                <label for="aadharno" class="form-label">Aadhar Number</label>
+                <input type="text" class="form-control text-center"  name="aadhar-number" [(ngModel)]="aadharno" ngModel >
+            </div>
+            <div class="mb-3 col">
+              <label for="panno" class="form-label">PAN Number</label>
+              <input type="text" class="form-control text-center"  name="pan-number" [(ngModel)]="panno" ngModel >
+            </div>
+            <div class="mb-3 col">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control text-center"  name="enail" [(ngModel)]="email" ngModel >
+            </div>
+            <div class="mb-3 col">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control text-center"  name="address" [(ngModel)]="address" ngModel >
+            </div>
+            <div class="mb-3 col">
+                <label for="amountRs" class="form-label">Mobile Number</label>
+                <input type="text" class="form-control text-center"  name="mobile-number" [(ngModel)]="mobileno" ngModel pattern="[0-9]{10}" 
+                (ngModelChange)="validateMobile()" >
+                <div *ngIf="false" class="text-danger">
+                  Please enter a valid 10-digit mobile number.
+                </div>
+            </div>
+            <div class="mb-3 col">
+                <label for="amountRs" class="form-label">Alternate Mobile Number</label>
+                <input type="text" class="form-control text-center"  name="al-mobile-number" [(ngModel)]="almobileno" ngModel >
+                
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="editCustomer(this.ecustomerid)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- View Model For Add Customer -->
+<div class="modal fade" id="customerAddViewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">New Customer Details</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row row-cols-1 row-cols-md-4 text-center">
+            <div class="mb-3 col">
+                <label for="cname" class="form-label">Customer Name</label>
+                <input type="text" class="form-control text-center"  name="customer-name" [(ngModel)]="newcustomername" ngModel>
+            </div>
+            <div class="mb-3 col">
+                <label for="aadharno" class="form-label">Aadhar Number</label>
+                <input type="text" class="form-control text-center"  name="aadhar-number" [(ngModel)]="newaadharno" ngModel>
+            </div>
+            <div class="mb-3 col">
+              <label for="panno" class="form-label">PAN Number</label>
+              <input type="text" class="form-control text-center"  name="pan-number" [(ngModel)]="newpanno" ngModel>
+            </div>
+            <div class="mb-3 col">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control text-center"  name="enail" [(ngModel)]="newemail" ngModel >
+            </div>
+            <div class="mb-3 col">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control text-center"  name="address" [(ngModel)]="newaddress" ngModel >
+            </div>
+            <div class="mb-3 col">
+              <label for="amountRs" class="form-label">Mobile Number</label>
+              <input type="text" class="form-control text-center"  name="mobile-number" [(ngModel)]="mobileno" ngModel 
+              pattern="[0-9]{10}"  (ngModelChange)="validateMobile()" >
+              <div *ngIf="mobileError" class="text-danger">
+                Please enter a valid 10-digit mobile number.
+              </div>
+          </div>
+            <div class="mb-3 col">
+                <label for="amountRs" class="form-label">Alternate Mobile Number</label>
+                <input type="text" class="form-control text-center"  name="al-mobile-number" [(ngModel)]="newalmobileno" ngModel 
+                pattern="[0-9]{10}"  (ngModelChange)="validateAltMobile()" >
+              <div *ngIf="altMobileError" class="text-danger">
+                Please enter a valid 10-digit mobile number.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="addcustomer()" data-bs-dismiss="modal">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+

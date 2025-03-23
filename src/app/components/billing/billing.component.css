@@ -1,0 +1,93 @@
+/* Existing styles */
+#pbarcode-error {
+    color: red;
+}
+
+input, select {
+    width: 16rem;
+}
+
+.addResp {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Preview Modal Styles */
+.preview-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.preview-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.preview-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.preview-actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+/* Animation styles */
+.addResp iframe {
+  width: 300px;
+  height: 300px;
+}
+
+.addResp h4 {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.addResp.Failure h4 {
+  color: #dc3545;
+}
+
+.addResp p {
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: underline;
+}
+
+/* Table styles */
+#billing-table {
+  margin-top: 20px;
+  border: 2px solid #dee2e6;
+}
+
+#billing-table thead th {
+  background-color: #343a40;
+  color: white;
+}
+
+#billing-table tbody td {
+  vertical-align: middle;
+}
+
+/* Modal adjustments */
+.modal-xl {
+  max-width: 90%;
+}

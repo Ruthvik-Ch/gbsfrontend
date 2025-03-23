@@ -1,0 +1,169 @@
+<div class="sales-comp container-fluid">
+  <h2 class="text-center">Sales Details</h2>
+  <div class="container-fluid">
+    <div class="filters">
+      <input class="form-control" type="text" placeholder="Search " [(ngModel)]="searchTerm" (input)="filterSales()">
+
+      <div class="date-filter">
+        <input id="startDate" class="form-control" type="date" placeholder="Select Date"  [(ngModel)]="searchTermDate" (change)="filterSales()"/>
+      </div>
+    </div>
+    <br>
+    <table class="table table-light" id="sales-table">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Customer Name</th>
+          <th scope="col">Mobile Number</th>
+          <th scope="col">Item Name</th>
+          <th scope="col">HSN Code</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody id="sales-tbody">
+        <tr *ngFor="let item of filteredSalesDetails | paginate: { itemsPerPage: 10, currentPage: currentPage }">
+          <td>{{item.CustomerName}}</td>
+          <td>{{item.Phone}}</td>
+          <td>{{item.ItemName_Description}}</td>
+          <td>{{item.HSNCode}}</td>
+          <td>{{item.Amount_RsPs}}</td>
+          <td><button type="submit" attr.data-salesid="{{item.SalesID}}" data-bs-toggle="modal"
+              data-bs-target="#salesViewModal" class="btn btn-primary sview-Btns"
+              (click)="viewSalesById(item.SalesID)">View</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+
+  </div>
+</div>
+
+<!-- View Modal -->
+<div class="modal fade" id="salesViewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Sales Details</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row row-cols-1 row-cols-md-4 text-center">
+          <div class="mb-3 col">
+            <label for="amountRs" class="form-label">Customer Name</label>
+            <input readonly type="text" class="form-control text-center" name="customer-name" [(ngModel)]="customername"
+              ngModel>
+          </div>
+          <div class="mb-3 col">
+            <label for="amountRs" class="form-label">Mobile Number</label>
+            <input readonly type="text" class="form-control text-center" name="mobile-number" [(ngModel)]="mobileno"
+              ngModel readonly>
+          </div>
+          <div class="mb-3 col">
+            <label for="amountRs" class="form-label">Aadhar Number</label>
+            <input readonly type="text" class="form-control text-center" name="aadhar-number" [(ngModel)]="aadharno"
+              ngModel readonly>
+          </div>
+          <div class="mb-3 col">
+            <label for="amountRs" class="form-label">PAN Number</label>
+            <input readonly type="text" class="form-control text-center" name="pan-number" [(ngModel)]="panno" ngModel
+              readonly>
+          </div>
+          <div class="mb-3 col">
+            <label for="amountRs" class="form-label">Carat Type</label>
+            <input readonly type="text" class="form-control text-center" name="carat-type" [(ngModel)]="carat_type"
+              ngModel readonly>
+          </div>
+          <div class="mb-3 col">
+            <label for="amountRs" class="form-label">Category</label>
+            <input readonly type="text" class="form-control text-center" name="category-name"
+              [(ngModel)]="category_name" ngModel readonly>
+          </div>
+          <div class="mb-3 col">
+            <label for="amountRs" class="form-label">Sub Category</label>
+            <input readonly type="text" class="form-control text-center" name="sub-category" [(ngModel)]="sub_category"
+              ngModel readonly>
+          </div>
+          <div class="mb-3 col">
+            <label for="item-name" class="form-label">Item Name</label>
+            <input readonly type="text" class="form-control text-center" [(ngModel)]="itemname" ngModel readonly
+              name="item-name">
+          </div>
+          <div class="mb-3 col">
+            <label for="huid" class="form-label">HUID</label>
+            <input readonly type="text" class="form-control text-center" [(ngModel)]="huid" ngModel readonly
+              name="huid">
+          </div>
+          <div class="mb-3 col">
+            <label for="hsncode" class="form-label">HSN Code</label>
+            <input readonly type="text" class="form-control text-center" [(ngModel)]="hsncode" ngModel readonly
+              name="hsncode">
+          </div>
+          <div class="mb-3 col">
+            <label for="tagno" class="form-label">Tag No.</label>
+            <input readonly type="text" class="form-control text-center" [(ngModel)]="tagnumber" ngModel readonly
+              name="tgnumber">
+          </div>
+          <div class="mb-3 col">
+            <label for="gramweight" class="form-label">Gross Weight</label>
+            <input readonly type="number" min="0" class="form-control text-center" [(ngModel)]="gramweight" readonly
+              ngModel name="gramweight">
+          </div>
+          <div class="mb-3 col">
+            <label for="netweight" class="form-label">Net Weight</label>
+            <input readonly type="number" min="0" class="form-control text-center" [(ngModel)]="netweight" ngModel
+              readonly name="netweight">
+          </div>
+          <div class="mb-3 col">
+            <label for="ratepergram" class="form-label">Rate Per Gram</label>
+            <input readonly type="number" min="0" class="form-control text-center" [(ngModel)]="ratepergram" ngModel
+              readonly name="ratepergram">
+          </div>
+          <div class="mb-3 col">
+            <label for="makingdirect" class="form-label">MC Amount:</label>
+            <input readonly type="number" min="0" class="form-control text-center" [(ngModel)]="mcvalue" ngModel
+              readonly required name="mcvalue">
+          </div>
+          <div class="mb-3 col">
+            <label for="wastagedirect" class="form-label">Wastage Amount:</label>
+            <input readonly type="number" min="0" class="form-control text-center" [(ngModel)]="wcvalue" ngModel
+              readonly required name="wcvalue">
+          </div>
+          <div class="mb-3 col">
+            <label for="value" class="form-label">V.A</label>
+            <input readonly type="number" min="0" class="form-control text-center" [(ngModel)]="vavalue" ngModel
+              readonly required name="vavalue">
+          </div>
+          <div class="mb-3 col">
+            <label for="stonepieces" class="form-label">Stone Type.:</label>
+            <input readonly type="text" class="form-control text-center" [(ngModel)]="stonetype" ngModel readonly
+              required name="stone-type">
+          </div>
+          <div class="mb-3 col">
+            <label for="stonepieces" class="form-label">Stone Pieces.:</label>
+            <input readonly type="number" min="0" class="form-control text-center" [(ngModel)]="stonepieces" ngModel
+              readonly required name="stonepieces">
+          </div>
+          <div class="mb-3 col">
+            <label for="stoneRs" class="form-label">Stone Rs.</label>
+            <input readonly type="number" min="0" class="form-control text-center" [(ngModel)]="stoneRs" ngModel
+              required readonly name="stoneRs">
+          </div>
+          <div class="mb-3 col">
+            <label for="discountRs" class="form-label">Discount Rs.</label>
+            <input readonly type="number" min="0" class="form-control text-center" [(ngModel)]="discountRs" ngModel
+              required readonly name="discountRs">
+          </div>
+          <div class="mb-3 col">
+            <label for="amountRs" class="form-label">Amount Rs.</label>
+            <input readonly type="number" min="0" class="form-control text-center" [(ngModel)]="amountRs" ngModel
+              required readonly name="amountRs">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="editSales(this.esalesId)">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>

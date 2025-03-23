@@ -1,0 +1,57 @@
+<div class="container-fluid">
+    <h2 class="text-center">Advances</h2>
+    <form>
+      <div class="row row-cols-1 row-cols-md-3">
+        <div class="mb-3 col">
+          <label for="user-id" class="form-label">Customer ID</label>
+          <input type="text" class="form-control" [(ngModel)]="custId" ngModel required name="user-id" (input)="getCustomerDetails()">
+        </div>
+        <div class="mb-3 col">
+          <label for="advance-amount" class="form-label">Advance Amount</label>
+          <input type="text" class="form-control" [(ngModel)]="advanceamt" ngModel required name="advance-amount">
+        </div>
+        <div class="mb-3 col">
+          <label for="mobile-number" class="form-label">Mobile Number</label>
+          <input type="number" class="form-control" [(ngModel)]="mobileno" ngModel required name="mobile-number">
+        </div>
+        <div class="mb-3 col">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" [(ngModel)]="desc" ngModel required name="description">
+            </textarea>
+            <div id="advancemissing-error" class="form-text"></div>
+            <button type="submit" class="btn btn-primary mt-1" (click)="add_advance(mobileno)">Add</button>
+          </div>
+      </div>
+    </form>
+  
+    <div class="container-fluid">
+      <input class="form-control" type="text" placeholder="Search " [(ngModel)]="searchTerm" (input)="filterAdvances()">
+<br>
+      <table class="table table-light" id="advance-table">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Advance Amount</th>
+            <th scope="col">Advance Description</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let advance of filteredAdvances | paginate: { itemsPerPage: 10, currentPage: currentPage }" >
+            <td>{{advance.Date| date: 'dd/MM/YYYY' }}</td>
+            <td>{{advance.CustomerName}}</td>
+            <td>{{advance.Amount}}</td>
+            <td>{{advance.AdvanceDesc}}</td>
+            
+          </tr>
+        </tbody>
+
+      </table>
+      <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+
+    </div>
+  </div>
+  
+  
+  

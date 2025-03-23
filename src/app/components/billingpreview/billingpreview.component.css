@@ -1,0 +1,126 @@
+.invoice-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.invoice-content {
+  border: 1px solid #000;
+  padding: 15px;
+  background-color: #fff;
+}
+
+.invoice-header h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.customer-info {
+  text-align: left;
+}
+
+.invoice-info {
+  text-align: right;
+}
+
+.customer-info p, .invoice-info p {
+  margin: 0;
+  padding: 2px 0;
+  font-size: 14px;
+}
+
+.invoice-body {
+  margin-top: 15px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+/* Ensuring all table cells have borders */
+.table th, .table td {
+  border: 1px solid #000;
+  padding: 5px;
+  font-size: 12px;
+  text-align: left;
+}
+
+.table th {
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+/* Remove borders for empty rows, except for side borders */
+.empty-row td {
+  height: 15px;
+  border-top: none !important;   /* Remove top border */
+  border-bottom: none !important; /* Remove bottom border */
+  border-left: 1px solid #000;    /* Keep left border */
+  border-right: 1px solid #000;   /* Keep right border */
+  background-color: transparent;
+}
+
+/* Style for total row */
+.total-row td {
+  border: 1px solid #000;
+  font-weight: bold;
+}
+
+.invoice-footer {
+  margin-top: 20px;
+}
+
+.invoice-footer p {
+  margin: 0;
+  padding: 2px 0;
+  font-size: 12px;
+}
+
+.table-borderless td {
+  border: none;
+  padding: 2px;
+  font-size: 12px;
+}
+
+.text-end {
+  text-align: right;
+}
+
+.disclaimer-text {
+  font-size: 11px;
+  font-style: italic;
+}
+
+.preview-footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.btn {
+  padding: 8px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.btn-success {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+}
+
+.btn-danger {
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+
+.gst-signature {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}

@@ -1,0 +1,30 @@
+.table-container{
+    display: block;
+    padding: 1rem;
+    overflow: auto;
+}
+td{
+    padding: .2rem .6rem;
+}
+.print-btn{
+    margin: .6rem;
+}
+.atn-btn{
+    margin: .6rem;
+}
+
+.sub-cat-filter{
+    display: flex;
+    align-items: center;
+    margin: 1rem 0rem;   
+    overflow-x: auto; 
+    /* ::-webkit-scrollbar {
+        display: none;
+    } */
+}
+/* .sub-cat-scroll::-webkit-scrollbar {
+    display: none;
+} */
+.cust-radio{
+    margin: 0rem .5rem;
+}

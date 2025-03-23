@@ -1,0 +1,205 @@
+<div class="sidebar" *ngIf="authService.isLoggedIn()">
+  <div class="logo-details">
+    <i class="bx bxl-c-plus-plus"></i>
+    <span class="logo_name">GBS</span>
+  </div>
+  <ul class="nav-links">
+    <li [routerLinkActive]="['active']">
+      <a [routerLink]="['./dashboard']">
+        <i class="bx bx-grid-alt"></i>
+        <span class="links_name">Dashboard</span>
+      </a>
+    </li>
+    <li [routerLinkActive]="['active']">
+      <a [routerLink]="['./billing']">
+        <i class='bx bx-purchase-tag-alt'></i>
+        <span class="links_name">Purchase</span>
+      </a>
+    </li>
+    <li [routerLinkActive]="['active']">
+      <a [routerLink]="['./productlist']">
+        <i class="bx bx-box"></i>
+        <span class="links_name">Stock</span>
+      </a>
+    </li>
+    <li [routerLinkActive]="['active']">
+      <a [routerLink]="['./stock']">
+        <i class="bx bx-coin-stack"></i>
+        <span class="links_name">Add Product</span>
+      </a>
+    </li>
+    <li [routerLinkActive]="['active']">
+      <a [routerLink]="['./sales']">
+        <i class="bx bx-list-ul"></i>
+        <span class="links_name">Sales</span>
+      </a>
+    </li>
+
+
+    <!-- <li [routerLinkActive]="['active']">
+      <a [routerLink]="['./customizedorders']">
+        <i class="bx bx-pie-chart-alt-2"></i>
+        <span class="links_name">Analytics Null </span>
+      </a>
+    </li> -->
+
+    <!-- <li [routerLinkActive]="['active']">
+      <a [routerLink]="['./customizedorders']">
+        <i class="bx bx-book-alt"></i>
+        <span class="links_name">Total order Null</span>
+      </a>
+    </li>
+    <li [routerLinkActive]="['active']">
+      <a [routerLink]="['./customizedorders']">
+        <i class="bx bx-user"></i>
+        <span class="links_name">Team null</span>
+      </a>
+    </li>
+    <li [routerLinkActive]="['active']">
+      <a [routerLink]="['./customizedorders']">
+        <i class="bx bx-message"></i>
+        <span class="links_name">Messages null</span>
+      </a>
+    </li>
+    <li [routerLinkActive]="['active']">
+      <a [routerLink]="['./customizedorders']">
+        <i class="bx bx-heart"></i>
+        <span class="links_name">Favourites null </span>
+      </a>
+    </li> -->
+    <!-- <li [routerLinkActive]="['active']">
+      <a [routerLink]="['./customizedorders']">
+        <i class="bx bx-cog"></i>
+        <span class="links_name">Customized Orders</span>
+      </a>
+    </li> -->
+    <li class="log_out" (click)="authService.logout()">
+      <a>
+        <i class="bx bx-log-out"></i>
+        <span class="links_name">Log out</span>
+      </a>
+    </li>
+  </ul>
+</div>
+<section class="home-section">
+  <nav class="nav-btns">
+    <div class="sidebar-button" *ngIf="authService.isLoggedIn()">
+      <i class="bx bx-menu sidebarBtn"></i>
+      <span class="dashboard">Dashboard</span>
+    </div>
+    <div class="gs-daily-price" *ngIf="authService.isLoggedIn()">
+      <div class="container gs-prices">
+        <div class="gs-prices-list">
+          <div class="price-box">{{ this.twentyfourKarat }} <div class="price-title">Gold 24K</div>
+          </div>
+          <div class="price-box">{{ this.twentytwoKarat }} <div class="price-title">Gold 22K</div>
+          </div>
+          <div class="price-box">{{ this.eighteenKarat }} <div class="price-title">Gold 18K</div>
+          </div>
+          <div class="price-box">{{ this.silver }} <div class="price-title">Silver</div>
+          </div>
+        </div>
+        <button class="btn btn-outline-dark btn-sm gs-update-btn mb-3" data-bs-toggle="modal" data-bs-target="#gsModal">
+          Update Price
+        </button>
+      </div>
+    </div>
+    <div class="user-search" *ngIf="authService.isLoggedIn()">
+      <button (click)="onSeacrhBtnClick()" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#userDataModel">
+        <i class="bx bx-search"></i> User Search
+      </button>
+    </div>
+  </nav>
+  <div class="home-content">
+    <router-outlet></router-outlet>
+  </div>
+</section>
+
+<!-- model for update price -->
+<div class="modal fade" id="gsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Daily Price Update</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row row-cols-1 row-cols-md-4 text-center">
+          <div class="mb-3 col">
+            <label for="24K" class="form-label">24K</label>
+            <input type="text" class="form-control text-center" name="24K" [(ngModel)]="twentyfourKarat" ngModel />
+          </div>
+          <div class="mb-3 col">
+            <label for="22K" class="form-label">22K</label>
+            <input type="text" class="form-control text-center" name="22K" [(ngModel)]="twentytwoKarat" ngModel />
+          </div>
+          <div class="mb-3 col">
+            <label for="18K" class="form-label">18K</label>
+            <input type="text" class="form-control text-center" name="18K" [(ngModel)]="eighteenKarat" ngModel />
+          </div>
+          <div class="mb-3 col">
+            <label for="Silver" class="form-label">Silver</label>
+            <input type="text" class="form-control text-center" name="Silver" [(ngModel)]="silver" ngModel />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="savegoldprice()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- model for user search -->
+<div class="user-data-model modal fade" id="userDataModel" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Customers</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <div class="user-data-table">
+          <input class="form-control" type="text" placeholder="Search " [(ngModel)]="searchTerm" (input)="filterCustomers()">
+          <br>
+          <table class="table table-light" id="customer-table">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">CustomerId</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+              </tr>
+            </thead>
+            <tbody id="sales-tbody" class="user-data-tbody">
+                <tr  *ngFor="let item of filteredCustomers | paginate: { itemsPerPage: 10, currentPage: currentPage }">
+                    <td>{{item.CustomerID}}</td>
+                    <td>{{item.CustomerName}}</td>
+                    <td>{{item.Email}}</td>
+                    <td>{{item.Phone}}</td>
+                </tr>
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

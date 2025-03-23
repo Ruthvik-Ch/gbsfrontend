@@ -1,0 +1,18 @@
+<div class="loginpage">
+    <div class="container" id="container">
+        <div class="form-container sign-in-container">
+            <form action="">
+                <img src="../../../assets/Full Logo.png" alt="">
+                <h1>Sign In</h1>
+                <input type="email" placeholder="User Name" [(ngModel)]="user_name" name="username"  ngModel required>
+                <input type="password" placeholder="Password" [(ngModel)]="password" name="password"  ngModel required autocomplete="on">
+                <select name="branch" id="branch" (change)="getBranch($event)">
+                    <option value="">--Select Branch--</option>
+                    <option value="b1">Branch 1</option>
+                    <option value="Sathupally">Sathupally</option>
+                </select>
+                <button class="signinBtn" (click)="login()">Sign In</button>
+            </form>
+        </div>
+    </div>
+</div>

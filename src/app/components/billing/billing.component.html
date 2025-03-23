@@ -1,0 +1,233 @@
+<div class="billing-comp">
+  <div class="no-animation" *ngIf="!showAnim">
+    <h2 class="text-center">Billing Details</h2>
+    <form>
+      <div class="row row-cols-1 row-cols-md-3">
+        <div class="mb-3 col">
+          <label for="cust-id" class="form-label">Customer ID</label>
+          <input type="text" class="form-control" [(ngModel)]="custId" ngModel required name="cust-id" (input)="getCustomerDetails()">
+        </div>
+        <div class="mb-3 col">
+          <label for="customer-name" class="form-label">Customer Name</label>
+          <input type="text" class="form-control" [(ngModel)]="customername" ngModel required name="customer-name">
+        </div>
+        <div class="mb-3 col">
+          <label for="mobile-number" class="form-label">Mobile Number</label>
+          <input type="text" class="form-control" [(ngModel)]="mobileno" ngModel required name="mobile-number">
+        </div>
+        <div class="mb-3 col">
+          <label for="aadhar-number" class="form-label">Aadhar Number</label>
+          <input type="text" class="form-control" [(ngModel)]="aadharno" ngModel required name="aadhar-number">
+        </div>
+        <div class="mb-3 col">
+          <label for="state-code" class="form-label">Pin Code</label>
+          <input type="text" class="form-control" [(ngModel)]="statecode" ngModel required name="state-code">
+        </div>
+        <div class="mb-3 col">
+          <label for="productbar-code" class="form-label">Product Bar Code</label>
+          <input type="text" id="pbarcode-inp" class="form-control" [(ngModel)]="pbarcode" ngModel required
+            name="productbar-code">
+          <div id="pbarcode-error" class="form-text"></div>
+          <button type="submit" class="btn btn-primary mt-1" (click)="add_billing_product(pbarcode)">Add</button>
+        </div>
+      </div>
+    </form>
+  
+    <div class="container-fluid">
+      <table class="table" id="billing-table">
+        <thead class=" table table-dark">
+          <tr>
+            <th scope="col">Item Name</th>
+            <th scope="col">HSN Code</th>
+            <th scope="col">Gr. Weight Grams</th>
+            <th scope="col">Net Weight Grams</th>
+            <th scope="col">Rate Per Gram</th>
+            <th scope="col">Val Add.</th>
+            <th scope="col">Stones</th>
+            <th scope="col">Discount</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Action</th>
+            <th scope="col">Gen Bill</th>
+            <th scope="col">Estimate</th>
+          </tr>
+        </thead>
+        <tbody id="billing-tbody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <app-billing-preview 
+      *ngIf="showPreview"
+      [billData]="billPreviewData"
+      (closePreview)="closePreview()"
+      (confirmBill)="confirmBill()"
+    ></app-billing-preview>
+
+  <app-billingestimate
+      *ngIf="showEstimate"
+      [estimateData]="billEstimateData"
+      (closeEstimate)="closeEstimate()"
+    ></app-billingestimate>
+
+  <div class="animation" *ngIf="showAnim">
+    <div class="addResp Success" *ngIf="isAddSuccess">
+        <h4>Product sold successfully!</h4>
+        <iframe src="https://lottie.host/embed/f0c5fae6-3732-4a5f-be77-c686cf4069c6/jHPZbdPQgu.lottie"></iframe>
+        <p (click)="setAnim()"> Go back </p>
+    </div>
+    <div class="addResp Failure" *ngIf="!isAddSuccess">
+        <h4>Failed to add sale!</h4>
+        <p>Please try again</p>
+        <iframe src="https://lottie.host/embed/1f98ede5-4842-42b7-8b78-fa87994823c6/MQkdPJ6rtA.lottie"></iframe>
+        <p (click)="setAnim()"> Go back </p>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="productEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Product Details</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row row-cols-1 row-cols-md-4 text-center">
+          <!-- <div class="mb-3 col">
+            <label for="carat-type" class="form-label">Carat Type:</label>
+            <select class="form-control" [(ngModel)]='carat' name="carat" id="carat"  (change)="getCaratValue($event)">
+              <option value="22K">22K</option>
+              <option value="24K">24K</option>
+              <option value="18K">18K</option>
+              <option value="silver">Silver</option>
+            </select>
+          </div>
+          <div class="mb-3 col">
+            <label for="category-name" class="form-label">Category</label>
+            <select class="form-control" [(ngModel)]='categoryname' name="categoryname" id="categoryname"  (change)="getCategoryValue($event)">
+              <option value="">--Select Category--</option>
+              <option *ngFor="let item of categories" value="{{item.CategoryID}}">{{item.CategoryName}}</option>
+            </select>
+          </div> -->
+          <!-- <div class="mb-3 col">
+            <label for="subcategory-name" class="form-label">Sub Category</label>
+            <select class="form-control" [(ngModel)]='subcategoryname' name="subcategoryname" id="subcategoryname" (change)="getSubCategoryValue($event)">
+              <option value="">--Select Sub-Category--</option>
+              <option *ngFor="let item of categories" value="{{item.CategoryID}}">{{item.SubCategoryName}}</option>
+            </select>
+          </div> -->
+          <div class="mb-3 col">
+            <label for="item-name" class="form-label">Item Name</label>
+            <input type="text" class="form-control" [(ngModel)]="itemname" ngModel required name="item-name">
+          </div>
+          <div class="mb-3 col">
+            <label for="huid" class="form-label">HUID</label>
+            <input type="text" class="form-control" [(ngModel)]="huid" ngModel required name="huid">
+          </div>
+          <div class="mb-3 col">
+            <label for="hsncode" class="form-label">HSN Code</label>
+            <input type="text" class="form-control" [(ngModel)]="hsncode" ngModel required name="hsncode">
+          </div>
+          <div class="mb-3 col">
+            <label for="tagno" class="form-label">Tag No.</label>
+            <input type="text" class="form-control" [(ngModel)]="tagnumber" ngModel required name="tgnumber">
+          </div>
+          <div class="mb-3 col">
+            <label for="gramweight" class="form-label">Gross Weight</label>
+            <input type="number" min="0" class="form-control" [(ngModel)]="gramweight" ngModel required
+              name="gramweight">
+          </div>
+          <div class="mb-3 col">
+            <label for="netweight" class="form-label">Net Weight</label>
+            <input type="number" min="0" class="form-control" [(ngModel)]="netweight" ngModel required name="netweight">
+          </div>
+          <div class="mb-3 col">
+            <label for="ratepergram" class="form-label">Rate Per Gram</label>
+            <input type="number" min="0" class="form-control" [(ngModel)]="ratepergram" ngModel (change)="calculate()" required name="ratepergram">
+          </div>
+          <!-- <div class="mb-3 col">
+            <label for="making-charge" class="form-label dn">Making Charge:</label>
+            <select class="form-control" [(ngModel)]='mctype' name="mctype" id="mctype">
+              <option value="">--Select type--</option>
+              <option value="percentage">Percentage</option>
+              <option value="amount">Amount</option>
+            </select>
+          </div> -->
+          <div class="mb-3 col">
+            <label for="makingdirect" class="form-label">MC Amount:</label>
+            <input type="number" min="0" class="form-control" [(ngModel)]="mcvalue" ngModel (change)="mgcalculate()" required name="mcvalue">
+          </div>
+          <!-- <div class="mb-3 col">
+            <label for="wastage-charge:" class="form-label">Wastage Amount:</label>
+            <select class="form-control" [(ngModel)]='wctype' name="wctype" id="wctype" (change)="getWcValue($event)">
+              <option value="">--Select type--</option>
+              <option value="percentage">Percentage</option>
+              <option value="amount">Amount</option>
+            </select>
+          </div> -->
+          <div class="mb-3 col">
+            <label for="wastagedirect" class="form-label">Wastage Amount:</label>
+            <input type="number" min="0" class="form-control" [(ngModel)]="wcvalue" ngModel required (change)="wdcalculate()" name="wcvalue">
+          </div>
+          <div class="mb-3 col">
+            <label for="value" class="form-label">V.A</label>
+            <input type="number" min="0" class="form-control" [(ngModel)]="vavalue" ngModel required name="vavalue">
+          </div>
+          <div class="mb-3 col">
+            <label for="wastage-charge:" class="form-label">Stone Type:</label>
+            <select class="form-control" [(ngModel)]='stonetype' name="stonetype" id="stonetype" (change)="getStoneType($event)">
+              <option value="">-- Select Stone Type --</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+          <div class="mb-3 col">
+            <label for="stone" class="form-label">Stone Pieces/CTS:</label>
+            <select class="form-control" [(ngModel)]='stonepi' name="stonepi" id="stonepi" (change)="getStone($event)">
+              <option value="">-- Select --</option>
+              <option value="pieces">Pieces</option>
+              <option value="cts">CTS</option>
+            </select>
+          </div>
+          <div class="mb-3 col" *ngIf="isVisible">
+            <label for="stonepieces" class="form-label">Stone Pieces.:</label>
+            <input type="number" min="0" class="form-control" [(ngModel)]="stonepieces" ngModel required (change)="stonecalculate()" name="stonepieces">
+          </div>
+          <div class="mb-3 col">
+            <label for="stoneRs" class="form-label">Stone Rs.</label>
+            <input type="number" min="0" class="form-control" [(ngModel)]="stoneRs" (change)="stonecalculate()" ngModel required name="stoneRs">
+          </div>
+          <div class="mb-3 col">
+            <label for="discountRs" class="form-label">Discount Rs.</label>
+            <input type="number" min="0" class="form-control" [(ngModel)]="discountRs" ngModel required (change)="calculate()" name="discountRs">
+          </div>
+          <div class="mb-3 col">
+            <label for="amountRs" class="form-label">Amount Rs.</label>
+            <input type="number" min="0" class="form-control" [(ngModel)]="amountRs" ngModel required name="amountRs">
+          </div>
+          
+          <div class="mb-3 col">
+            <label for="advanceAmt" class="form-label">Advance Amount</label>
+            <input type="number" min="0" max={{maxAdvAmt}} value={{maxAdvAmt}} class="form-control" [(ngModel)]='advAmount' name="advAmount" ngModel (change)="onAdvAmtChange()">
+
+          </div>
+
+          <div class="mb-3 col">
+            <label for="schemeAmt" class="form-label">Scheme Amount</label>
+            <input type="number" min="0" max={{maxSchemeAmt}} value={{maxSchemeAmt}} class="form-control" [(ngModel)]='schemeAmt' name="schemeAmt" ngModel (change)="onSchemeChange()">
+
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="editBillDetails()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

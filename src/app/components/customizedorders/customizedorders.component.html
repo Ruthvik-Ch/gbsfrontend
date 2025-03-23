@@ -1,0 +1,108 @@
+<h2 class="text-center">Customized Orders</h2>
+
+<div class="filters" >
+    <input class="form-control" type="text" placeholder="Item Name" [(ngModel)]="itemNameFilter"/>
+    <input class="form-control" type="date" placeholder="Delivery Date" [(ngModel)]="deliveryDateFilter"/>
+    <input class="form-control" type="text" placeholder="Model Number" [(ngModel)]="modelNumberFilter"/> 
+</div>
+<div class="buttons">
+    <button class="btn btn-dark" (click)="applyFilters()">Apply Filters</button>
+    <button class="btn btn-primary" type="submit"  data-bs-toggle="modal" data-bs-target="#productListAddModal">Add New </button>
+</div>
+
+
+
+<div class="container-fluid">
+    <table class="table table-light" id="customizedorders-table">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Delivery Data of Ornament</th>
+          <th scope="col">Item Name</th>
+          <th scope="col">Weight</th>
+          <th scope="col">Making Charge</th>
+          <th scope="col">Wastage</th>
+          <th scope="col">Gram Rate</th>
+          <th scope="col">Model No</th>
+          <th scope="col">Advances</th>
+        </tr>
+
+        <tr *ngFor="let customizedorder of customizedorders  | paginate: { itemsPerPage: 10, currentPage: currentPage }">
+            <td>{{customizedorder.OrderedDate}}</td>
+            <td>{{customizedorder.DeliveryDate}}</td>
+            <td>{{customizedorder.ItemName}}</td>
+            <td>{{customizedorder.Weight}}</td>
+            <td>{{customizedorder.Making_Charge}}</td>
+            <td>{{customizedorder.Wastage}}</td>
+            <td>{{customizedorder.Gram_Rate}}</td>
+            <td>{{customizedorder.ModelNumber}}</td>
+            <td>{{customizedorder.Advance_Amount}}</td>
+
+
+        </tr>
+      </thead>
+      <tbody >
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+
+  </div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="productListAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Customized Orders</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+            <div class="modal-body">
+                <div class="row row-cols-md-2 text-center field-container">
+                    <div class="mb-3 col field">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="date" class="form-control" [(ngModel)]="date" ngModel required name="date">
+                    </div>
+                  
+                    <div class="mb-3 col field">
+                        <label for="item-name" class="form-label">Item Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="itemname" ngModel required name="item-name">
+                    </div>
+                    <div class="mb-3 col field">
+                        <label for="weight" class="form-label">Weight</label>
+                        <input type="text" class="form-control" [(ngModel)]="weight" ngModel required name="weight">
+                    </div>
+                    <div class="mb-3 col field">
+                        <label for="making-charge" class="form-label">Making Charge</label>
+                        <input type="text" class="form-control" [(ngModel)]="makingcharge" ngModel required name="making-charge">
+                    </div>
+                    <div class="mb-3 col field">
+                        <label for="wastage" class="form-label">Wastage</label>
+                        <input type="text" class="form-control" [(ngModel)]="wastage" ngModel required name="wastage">
+                    </div>
+                    <div class="mb-3 col field">
+                        <label for="gram-rate" class="form-label">Gram Rate</label>
+                        <input type="text" class="form-control" [(ngModel)]="gramrate" ngModel required name="gram-rate">
+                    </div>
+                    <div class="mb-3 col field">
+                        <label for="model-number" class="form-label">Model Number</label>
+                        <input type="text" class="form-control" [(ngModel)]="modelnumber" ngModel required name="model-number">
+                    </div>
+                    <div class="mb-3 col field">
+                        <label for="advance" class="form-label">Advances</label>
+                        <input type="text" class="form-control" [(ngModel)]="advances" ngModel required name="advances">
+                    </div>
+                    <div class="mb-3 col field">
+                        <label for="ddofornament" class="form-label">Delivery Date of Ornament</label>
+                        <input type="date" class="form-control" [(ngModel)]="ddofornament" ngModel required name="ddofornament">
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="addcustomizedorders()" data-bs-dismiss="modal">Add Order</button>
+              </div>
+        </div>      
+    </div>
+</div>
+  

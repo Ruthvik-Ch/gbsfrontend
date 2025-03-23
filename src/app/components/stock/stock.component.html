@@ -1,0 +1,143 @@
+<div class="add-product-comp">
+    <div class="stock-form" id="formdetails" *ngIf="!showAnim">
+        <form #stockForm = "ngForm" id="stockForm" action="">
+            <h2>Add your product details
+            </h2>
+            <div class="fields">
+                <div class="input-fields">
+                    <label for="carat-type">Carat Type:</label>
+                   <select class="form-select" (change)="getCaratValue($event)">
+                    <option value="22K">22K</option>
+                    <option value="24K">24K</option>
+                    <option value="18K">18K</option>
+                    <option value="Silver">Silver</option>
+                    </select>
+                    
+                </div>
+                <div class="input-fields">
+                    <label for="category">Category:
+                   <select class="form-select"  (change)="getCategoryValue($event)">
+                        <option value="">--Select Category--</option>
+                        <option *ngFor="let item of uniqueCategories" [ngValue]="item">{{item}}</option>
+                    </select>
+                    </label>
+                </div>
+                <div class="input-fields">
+                    <label for="subcategory">Sub-Category:
+                   <select class="form-select" (change)="getSubCategoryValue($event)">
+                        <option value="">Select Sub-Category</option>
+                        <option *ngFor="let item of subCatList" [ngValue]="item">{{item}}</option>
+                    </select>
+                    </label>
+                </div>
+                <div class="input-fields">
+                    <label for="item-name">Item Name:
+                        <input class="form-control" type="text" placeholder="Item Name" [(ngModel)]="itemname" name="item-name"  ngModel required></label><br>
+                </div>
+                <div class="input-fields">
+                    <label for="huid">HUID:
+                        <input class="form-control" type="text" placeholder="HUID" [(ngModel)]="huid" name="huid"  ngModel required ></label><br>
+                </div>
+                <div class="input-fields">
+                    <label for="hsncode">HSN Code:
+                        <input class="form-control" type="text" placeholder="HSN Code" [(ngModel)]="hsncode" name="hsncode"  ngModel required ></label><br>
+                </div>
+                <div class="input-fields">
+                    <label for="tagno">Tag No. :
+                        <input class="form-control" type="text" placeholder="Tag Number" [(ngModel)]="tgnumber" name="tgnumber"  ngModel required ></label><br>
+                </div>
+                <div class="input-fields">
+                    <label for="barcodeprefix">Barcode Prefix:
+                        <input class="form-control" type="text" placeholder="Barcode Prefix"  ngModel minlength="2" maxlength="2" [(ngModel)]="barcode" name="barcode"  ngModel required ></label><br>
+                </div>
+                <div class="input-fields">
+                    <label for="gramweight">Gross Weight:
+                        <input class="form-control" type="number" min="0" placeholder="Gross Weight" [(ngModel)]="gramweight" name="gramweight"  ngModel required></label><br>
+                </div>
+                <div class="input-fields">
+                    <label for="netweight">Net Weight:
+                        <input class="form-control" type="number" min="0" placeholder="Net Weight" [(ngModel)]="netweight" name="netweight"  ngModel required></label><br>
+                </div>
+                <div class="input-fields">
+                    <label for="ratepergram">Rate Per Gram:
+                        <input class="form-control" type="number" min="0" placeholder="Rate Per Gram" [(ngModel)]="ratepergram" name="ratepergram"  ngModel readonly></label><br>
+                </div>
+                <!-- <div class="input-fields dn">
+                    <label for="making-charge">Making Charge:
+                        <select class="form-select" (change)="getMcValue($event)">
+                            <option value="">--Select type--</option>
+                            <option value="percentage">Percentage</option>
+                            <option value="amount">Amount</option>
+                        </select>
+                    </label>
+                </div> -->
+                <div class="input-fields">
+                    <label for="makingdirect">MC Amount:
+                        <input class="form-control" type="number" min="0" placeholder="Making Charge" [(ngModel)]="mcvalue" name="mcvalue" (change)="getVA()" ngModel required></label><br>
+                </div>
+                <div class="input-fields">
+                    <label for="wastagecharge">Wastage Weight:
+                    <input class="form-control" type="number" min="0" placeholder="Making Charge"  [(ngModel)]="wastageWeight" (change)="cal_wastage_amount()" name="wastageWeight"  ngModel required></label><br>
+                </div>
+                <div class="input-fields">
+                    <label for="wastagedirect">Wastage Amount:
+                    <input class="form-control" type="number" min="0" placeholder="Wastage Charge" [(ngModel)]="wcvalue" name="wcvalue" (change)="getVA()" ngModel required></label><br>
+                </div>
+                <div class="input-fields">
+                    <label for="va">V.A:
+                        <input class="form-control" type="number" min="0" [(ngModel)]="vavalue" name="vavalue"  ngModel required></label><br>
+                </div>
+                <div class="input-fields">
+                    <label for="stonetype">Stone Type:
+                        <select class="form-select" (change)="getStoneType($event)">
+                            <option value="">-- Select Stone Type --</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="input-fields" >
+                    <label for="stonepieces">Price per Stone Piece.:
+                        <input class="form-control" type="number" min="0" [(ngModel)]="pricePerStone" (change)="getStoneVal()" name="pricePerStone"  ngModel required></label><br>
+                </div>
+
+                <div class="input-fields">
+                    <label for="stone">Stone Pieces/CTS:
+                        <select class="form-select" (change)="getStone($event)">
+                            <option value="">-- Select --</option>
+                            <option value="pieces">Pieces</option>
+                            <option value="cts">CTS</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="input-fields" >
+                    <label for="stonepieces">Stone Pieces.:
+                        <input class="form-control" type="number" min="0" [(ngModel)]="stonepieces" (change)="getStoneVal()" name="stonepieces"  ngModel required></label><br>
+                </div>
+                <div class="input-fields">
+                    <label for="stoneRs">Stone Rs.:
+                        <input class="form-control" type="number" min="0" placeholder="Stone Rs." [(ngModel)]="stoneRs" name="stoneRs"  ngModel required></label><br>
+                </div>
+            </div>
+            <!-- <input class="form-control" type="submit" (click)="submit_product" value="submit"> -->
+            <a class="btn btn-dark" (click)="submit_product()">Add</a>  
+        </form>
+        <!-- {{stockform.value | json }} -->
+    </div>
+    <div class="animation" *ngIf="showAnim">
+        <div class="addResp Success" *ngIf="isAddSuccess">
+            <h4>Product sucessfully added!</h4>
+            <iframe src="https://lottie.host/embed/f0c5fae6-3732-4a5f-be77-c686cf4069c6/jHPZbdPQgu.lottie"></iframe>
+            <p (click)="setAnim()"> Go back </p>
+        </div>
+        <div class="addResp Failure" *ngIf="!isAddSuccess">
+            <h4>Product not added!</h4>
+            <p>Please try again</p>
+            <iframe src="https://lottie.host/embed/1f98ede5-4842-42b7-8b78-fa87994823c6/MQkdPJ6rtA.lottie"></iframe>
+            <p (click)="setAnim()"> Go back </p>
+        </div>
+
+    </div>
+</div>

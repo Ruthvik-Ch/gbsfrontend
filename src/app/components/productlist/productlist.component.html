@@ -1,0 +1,206 @@
+<div class="product-list-comp">
+  <h2 class="text-center">Product Stock</h2>
+  <div class="table-container">
+    <input class="form-control" type="text" placeholder="Search products" [(ngModel)]="searchTerm" (input)="filterProducts()">
+
+
+    <div class="sub-cat-filter">
+      <!-- <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off">
+      <label class="btn btn-sm btn-outline-success"for="success-outlined"> gold </label>
+      
+      <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off">
+      <label class="btn btn-sm btn-outline-success" for="danger-outlined"> silver </label> -->
+
+      <div *ngFor="let option of options">
+        <input type="radio" 
+               class="btn-check btn-sm cust-radio" 
+               [id]="option" 
+               [value]="option" 
+               [(ngModel)]="selectedSubCat"
+               (change)="onSelectionChange(option)">
+        <label class="btn btn-sm btn-outline-success cust-radio" [for]="option"> 
+          {{ option }} 
+        </label>
+      </div>
+    </div>
+
+    <table class="table table-light table-sm">
+      <thead class="table-dark">
+        <tr>
+        <td>ItemName Description</td>
+
+        <td>Net Weight Grams</td>
+        <td>Making Charges</td>
+        <td>Making Direct</td>
+        <td>Wastage Charges</td>
+
+        <td>V_A</td>
+
+        <td>Stone Pieces CTS</td>
+        <td>Stone RsPs</td>
+        <td>Amount RsPs</td>
+        <td>Barcode</td>
+        <!-- <td>Branch</td> -->
+        <td>Active Status</td>
+        <td> Action</td>
+        <!-- <td>Print barcode</td> -->
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of filteredProducts | paginate: { itemsPerPage: 10, currentPage: currentPage }" class="table-light" >
+          <td>{{product.ItemName_Description}}</td>
+
+          <td>{{product.NetWeight_Grams}}</td>
+          <td>{{product.Making_Charge}}</td>
+          <td>{{product.Making_Direct}}</td>
+          <td>{{product.Wastage_Charge}}</td>
+          <td>{{product.V_A}}</td>
+          <td>{{product.Stone_Pieces_CTS}}</td>
+          <td>{{product.Stones_RsPs}}</td>
+          <td>{{product.Amount_RsPs}}</td>
+          <td>{{product.BarCode}}</td>
+          <!-- <td>{{product.Branch}}</td> -->
+          <td>{{product.ActiveStatus}}</td>
+          <td>
+            <button type="submit" class="atn-btn" (click)="seeSingleProduct(product.BarCode)" data-bs-toggle="modal"
+              data-bs-target="#productListEditModal" class="btn btn-sm btn-primary peditPL-Btns">Edit</button>
+            <button type="submit" class="atn-btn" (click)="deleteProduct(product.HSNCode,product.HUID)"
+              class="btn btn-sm btn-danger">Delete</button>
+          </td>
+          <!-- <td>
+            <button class="print-btn" type="submit" class="btn btn-sm btn-dark"> Print</button>
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+
+  </div>
+
+  
+  
+  
+  <!-- Edit Modal -->
+  <div class="modal fade" id="productListEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">Product Details</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row row-cols-1 row-cols-md-4 text-center">
+            <div class="mb-3 col">
+              <label for="carat-type" class="form-label">Carat Type:</label>
+              <select class="form-control" (change)="getCaratValue($event)">
+                <option value="22K">22K</option>
+              <option value="24K">24K</option>
+              
+              <option value="18K">18K</option>
+              <option value="silver">Silver</option>
+              </select>
+            </div>
+            <div class="mb-3 col">
+              <label for="category-name" class="form-label">Category</label>
+              <input type="text" class="form-control" [(ngModel)]="categoryName" ngModel required name="category-name">
+
+            </div>
+            <div class="mb-3 col">
+              <label for="subcategory-name" class="form-label">Sub Category</label>
+              <input type="text" class="form-control" [(ngModel)]="subCategoryName" ngModel required name="subcategory-name">
+
+            </div>
+            <div class="mb-3 col">
+              <label for="item-name" class="form-label">Item Name</label>
+              <input type="text" class="form-control" [(ngModel)]="itemname" ngModel required name="item-name">
+            </div>
+            <div class="mb-3 col">
+              <label for="huid" class="form-label">HUID</label>
+              <input type="text" class="form-control" [(ngModel)]="huid" ngModel required name="huid">
+            </div>
+            <div class="mb-3 col">
+              <label for="hsncode" class="form-label">HSN Code</label>
+              <input type="text" class="form-control" [(ngModel)]="hsncode" ngModel required name="hsncode">
+            </div>
+            <div class="mb-3 col">
+              <label for="tagno" class="form-label">Tag Name</label>
+              <input type="text" class="form-control" [(ngModel)]="tagname" ngModel required name="tgnumber">
+            </div>
+            <div class="mb-3 col">
+              <label for="ratepergram" class="form-label">Rate Per Gram</label>
+              <input type="number" min="0" class="form-control" [(ngModel)]="ratepergram" ngModel required
+                name="ratepergram">
+            </div>
+            <div class="mb-3 col">
+              <label for="netweight" class="form-label">Net Weight</label>
+              <input type="number" min="0" class="form-control" [(ngModel)]="netweight" ngModel required name="netweight">
+            </div>
+            <!-- <div class="mb-3 col">
+              <label for="making-charge" class="form-label dn">Making Charge:</label>
+              <select class="form-control" [(ngModel)]='mctype'>
+                <option value="">--Select type--</option>
+                <option value="percentage">Percentage</option>
+                <option value="amount">Amount</option>
+              </select>
+            </div> -->
+            <div class="mb-3 col">
+              <label for="makingdirect" class="form-label">MC Amount:</label>
+              <input type="number" min="0" class="form-control" [(ngModel)]="mcvalue" ngModel (change)="mgcalculate()"
+                required name="mcvalue">
+            </div>
+            <!-- <div class="mb-3 col">
+              <label for="wastage-charge:" class="form-label">Wastage Amount:</label>
+              <select class="form-control" (change)="getWcValue($event)">
+                <option value="">--Select type--</option>
+                <option value="percentage">Percentage</option>
+                <option value="amount">Amount</option>
+              </select>
+            </div> -->
+            <div class="mb-3 col">
+              <label for="wastagedirect" class="form-label">Wastage Amount:</label>
+              <input type="number" min="0" class="form-control" [(ngModel)]="wcvalue" ngModel required
+                (change)="wdcalculate()" name="wcvalue">
+            </div>
+            <div class="mb-3 col">
+              <label for="value" class="form-label">V.A</label>
+              <input type="number" min="0" class="form-control" [(ngModel)]="vavalue" ngModel required name="vavalue">
+            </div>
+            <div class="mb-3 col">
+              <label for="stone-type:" class="form-label">Stone Type:</label>
+              <input type="number" min="0" class="form-control" [(ngModel)]="stonetype" ngModel required name="stone-type">
+
+            </div>
+            <div class="mb-3 col">
+              <label for="stone" class="form-label">Stone Pieces/CTS:</label>
+              <input type="text" class="form-control" [(ngModel)]="stonepiecescts" ngModel required name="stone">
+
+            </div>
+            <div class="mb-3 col" *ngIf="isVisible">
+              <label for="stonepieces" class="form-label">Stone Pieces.:</label>
+              <input type="number" min="0" class="form-control" [(ngModel)]="stonepieces" ngModel required
+                (change)="stonecalculate()" name="stonepieces">
+            </div>
+            <div class="mb-3 col">
+              <label for="stoneRs" class="form-label">Stone Rs.</label>
+              <input type="number" min="0" class="form-control" [(ngModel)]="stoneRs" (change)="stonecalculate()" ngModel
+                required name="stoneRs">
+            </div>
+            <div class="mb-3 col">
+              <label for="discountRs" class="form-label">Discount Rs.</label>
+              <input type="number" min="0" class="form-control" [(ngModel)]="discountRs" ngModel required
+                (change)="calculate()" name="discountRs">
+            </div>
+            <div class="mb-3 col">
+              <label for="amountRs" class="form-label">Amount Rs.</label>
+              <input type="number" min="0" class="form-control" [(ngModel)]="amountRs" ngModel required name="amountRs">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button *ngFor="let product of products" type="submit" class="btn btn-primary" (click)="updateProduct(product.HSNCode, product.HUID)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

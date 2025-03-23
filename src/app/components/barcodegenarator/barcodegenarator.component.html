@@ -1,0 +1,16 @@
+<div class="barcode-gen-comp">
+  <h2 class="text-center">Barcode Generator</h2>
+  <div class="bar-code-list">
+    <div *ngFor="let product of products" class="bar-code-item">
+      <div class="details">
+        <p>NET G.W : {{product.NetWeight_Grams}}</p>
+        <p>Stone Type : {{product.Stone_Type}}</p>
+      </div>
+      <h3 class="subheading barcode-name">{{ product.ItemName_Description }}</h3>
+      <svg [id]="'barcode-' + product.ProductID"></svg>
+    </div>
+  </div>
+</div>
+
+
+  

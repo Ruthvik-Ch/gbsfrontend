@@ -1,0 +1,8 @@
+.filters{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.filters input{
+    width: 20rem;
+}

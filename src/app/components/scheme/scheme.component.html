@@ -1,0 +1,60 @@
+<div class="container-fluid" class="mx-4">
+    <h2 class="text-center">Scheme Details</h2>
+    <form>
+      <div class="row row-cols-1 row-cols-md-4">
+        <div class="mb-3 col">
+          <label for="user-id" class="form-label">Customer Id</label>
+          <input type="text" class="form-control" [(ngModel)]="custId" ngModel required name="customer-id" (input)="getCustomerDetails()">
+        </div>
+        <div class="mb-3 col">
+            <label for="scheme-name" class="form-label">Scheme Name</label>
+            <input type="text" class="form-control" [(ngModel)]="schemename" ngModel required name="scheme-name">
+          </div>
+        <div class="mb-3 col">
+          <label for="scheme-amount" class="form-label">Scheme Amount</label>
+          <input type="text" class="form-control" [(ngModel)]="schemeamt" ngModel required name="scheme-amount">
+        </div>
+        <div class="mb-3 col">
+          <label for="mobile-number" class="form-label">Mobile Number</label>
+          <input type="number" class="form-control" [(ngModel)]="mobileno" ngModel required name="mobile-number">
+        </div>
+        <div class="mb-3 col">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" [(ngModel)]="desc" ngModel required name="description">
+            </textarea>
+            <div id="advancemissing-error" class="form-text"></div>
+            <button type="submit" class="btn btn-primary mt-1" (click)="add_scheme()">Add</button>
+          </div>
+      </div>
+    </form>
+  
+    <div class="container-fluid">
+      <input class="form-control" type="text" placeholder="Search " [(ngModel)]="searchTerm" (input)="filterSchemes()">
+<br>
+      <table class="table table-light" id="scheme-table">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Scheme Name</th>
+            <th scope="col">Scheme Amount</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let scheme of filteredSchemes  | paginate: { itemsPerPage: 10, currentPage: currentPage }" >
+            <td>{{scheme.createdAt | date: 'dd/MM/YYYY' }}</td>
+            <td>{{scheme.CustomerName}}</td>
+            <td>{{scheme.SchemeName}}</td>
+            <td>{{scheme.SchemeAmount}}</td>
+            <td>{{scheme.SchemeDesc}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+
+    </div>
+  </div>
+  
+  
+  
