@@ -2,14 +2,18 @@
     "version": 2,
     "builds": [
       {
-        "src": "dist/your-angular-app-name/**/*",
-        "use": "@vercel/static"
+        "src": "angular.json",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "dist/GBS_FRONTEND"
+        }
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/index.html"
+        "dest": "/index.html",
+        "status": 200
       }
     ]
   }
