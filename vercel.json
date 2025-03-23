@@ -1,8 +1,9 @@
+
 {
     "version": 2,
     "builds": [
       {
-        "src": "angular.json",
+        "src": "package.json",
         "use": "@vercel/static-build",
         "config": {
           "distDir": "dist/GBS_FRONTEND"
@@ -12,8 +13,7 @@
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/index.html",
-        "status": 200
+        "dest": "/index.html"
       }
     ]
   }
